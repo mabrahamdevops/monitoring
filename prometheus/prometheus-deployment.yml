@@ -29,6 +29,13 @@ spec:
               mountPath: /etc/prometheus/
             - name: prometheus-storage-volume
               mountPath: /prometheus/
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "100m"
+            requests:
+              memory: "30Mi"
+              cpu: "10m"
         - name: watch
           image: weaveworks/watch:master-5b2a6e5
           imagePullPolicy: IfNotPresent
@@ -36,11 +43,17 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "100m"
+            requests:
+              memory: "30Mi"
+              cpu: "10m"
       volumes:
         - name: prometheus-config-volume
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
-
         - name: prometheus-storage-volume
           emptyDir: {}
